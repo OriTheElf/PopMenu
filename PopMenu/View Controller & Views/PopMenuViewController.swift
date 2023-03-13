@@ -364,7 +364,7 @@ extension PopMenuViewController {
         // Move content in place
         translateOverflowX(desiredOrigin: &desiredOrigin, contentSize: size)
         translateOverflowY(desiredOrigin: &desiredOrigin, contentSize: size)
-        
+        desiredOrigin.y += sourceFrame.height + 8.0
         return desiredOrigin
     }
     
