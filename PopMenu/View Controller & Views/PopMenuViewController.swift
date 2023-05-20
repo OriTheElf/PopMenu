@@ -9,7 +9,7 @@
 import UIKit
 
 /// Delegate for handling PopMenu selection.
-@objc public protocol PopMenuViewControllerDelegate: class {
+@objc public protocol PopMenuViewControllerDelegate: AnyObject {
     /// Called when an action is selected.
     @objc optional func popMenuDidSelectItem(_ popMenuViewController: PopMenuViewController, at index: Int)
 }
@@ -45,7 +45,7 @@ final public class PopMenuViewController: UIViewController {
     public let contentView = PopMenuGradientView()
     
     /// The view contains all the actions.
-    public let actionsView = UIStackView()
+    public let actionStackView = UIStackView()
     
     /// The source View to be displayed from.
     private(set) weak var sourceView: AnyObject?
@@ -439,16 +439,17 @@ extension PopMenuViewController {
     
     /// Setup actions view.
     fileprivate func configureActionsView() {
-        actionsView.translatesAutoresizingMaskIntoConstraints = false
-        actionsView.axis = .vertical
-        actionsView.alignment = .fill
-        actionsView.distribution = .fillEqually
+        actionStackView.translatesAutoresizingMaskIntoConstraints = false
+        actionStackView.axis = .vertical
+        actionStackView.alignment = .fill
+        actionStackView.distribution = .fillEqually
 
         // Configure each action
         actions.forEach { action in
             action.font = appearance.popMenuFont
             action.tintColor = action.color ?? appearance.popMenuColor.actionColor.color
             action.cornerRadius = appearance.popMenuCornerRadius / 2
+            action.menuTitleAlignment = appearance.menuTitleAlignment
             action.renderActionView()
             
             // Give separator to each action but the last
@@ -461,7 +462,7 @@ extension PopMenuViewController {
             
             action.view.addGestureRecognizer(tapper)
             
-            actionsView.addArrangedSubview(action.view)
+            actionStackView.addArrangedSubview(action.view)
         }
         
         // Check add scroll view or not
@@ -474,7 +475,7 @@ extension PopMenuViewController {
             scrollView.indicatorStyle = appearance.popMenuScrollIndicatorStyle
             scrollView.contentSize.height = appearance.popMenuActionHeight * CGFloat(actions.count)
             
-            scrollView.addSubview(actionsView)
+            scrollView.addSubview(actionStackView)
             contentView.addSubview(scrollView)
             
             NSLayoutConstraint.activate([
@@ -485,22 +486,22 @@ extension PopMenuViewController {
             ])
             
             NSLayoutConstraint.activate([
-                actionsView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
-                actionsView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
-                actionsView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-                actionsView.heightAnchor.constraint(equalToConstant: scrollView.contentSize.height)
+                actionStackView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+                actionStackView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+                actionStackView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+                actionStackView.heightAnchor.constraint(equalToConstant: scrollView.contentSize.height)
             ])
         } else {
             // Not scrollable
-            actionsView.addGestureRecognizer(panGestureForMenu)
+            actionStackView.addGestureRecognizer(panGestureForMenu)
             
-            contentView.addSubview(actionsView)
+            contentView.addSubview(actionStackView)
             
             NSLayoutConstraint.activate([
-                actionsView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
-                actionsView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
-                actionsView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4),
-                actionsView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4)
+                actionStackView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+                actionStackView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+                actionStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4),
+                actionStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4)
             ])
         }
     }
@@ -598,10 +599,10 @@ extension PopMenuViewController {
         guard touchedInsideContent(location: gesture.location(in: view)) else { return nil }
         
         // Check which action is associated.
-        let touchLocation = gesture.location(in: actionsView)
+        let touchLocation = gesture.location(in: actionStackView)
         // Get associated index for touch location.
-        if let touchedView = actionsView.arrangedSubviews.filter({ return $0.frame.contains(touchLocation) }).first,
-            let index = actionsView.arrangedSubviews.index(of: touchedView){
+        if let touchedView = actionStackView.arrangedSubviews.filter({ return $0.frame.contains(touchLocation) }).first,
+            let index = actionStackView.arrangedSubviews.index(of: touchedView){
             return index
         }
         

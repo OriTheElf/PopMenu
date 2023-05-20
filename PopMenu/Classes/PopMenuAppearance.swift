@@ -50,6 +50,9 @@ public struct PopMenuAppearance {
     
     /// The presentation style
     public var popMenuPresentationStyle: PopMenuPresentationStyle = .cover()
+    
+    /// Menu alignment
+    public var menuTitleAlignment = NSTextAlignment.left
 
     public init() {
         

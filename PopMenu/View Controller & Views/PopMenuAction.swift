@@ -23,6 +23,8 @@ import UIKit
     /// The initial color of the action.
     var color: Color? { get }
     
+    var menuTitleAlignment: NSTextAlignment { get set }
+    
     /// The handler of action.
     var didSelect: PopMenuActionHandler? { get }
     
@@ -149,6 +151,16 @@ public class PopMenuDefaultAction: NSObject, PopMenuAction {
         return imageView
     }()
     
+    private lazy var contentStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [iconImageView, titleLabel])
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.spacing = 8.0
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.layoutMargins = UIEdgeInsets(top: 0, left: 18, bottom: 0, right: 18)
+        return stackView
+    }()
+    
     // MARK: - Constants
     
     public static let textLeftPadding: CGFloat = 25
@@ -168,26 +180,25 @@ public class PopMenuDefaultAction: NSObject, PopMenuAction {
     
     /// Setup necessary views.
     fileprivate func configureViews() {
-        var hasImage = false
-
         if let _ = image {
-            hasImage = true
+            iconImageView.isHidden = false
             view.addSubview(iconImageView)
             
             NSLayoutConstraint.activate([
                 iconImageView.widthAnchor.constraint(equalToConstant: iconWidthHeight),
                 iconImageView.heightAnchor.constraint(equalTo: iconImageView.widthAnchor),
-                iconImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: PopMenuDefaultAction.iconLeftPadding),
-                iconImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
             ])
+        } else {
+            iconImageView.isHidden = true
         }
         
-        view.addSubview(titleLabel)
-        
+        contentStackView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(contentStackView)
         NSLayoutConstraint.activate([
-            titleLabel.leadingAnchor.constraint(equalTo: hasImage ? iconImageView.trailingAnchor : view.leadingAnchor, constant: hasImage ? 8 : PopMenuDefaultAction.textLeftPadding),
-            titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 20),
-            titleLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            contentStackView.topAnchor.constraint(equalTo: view.topAnchor),
+            contentStackView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            contentStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            contentStackView.rightAnchor.constraint(equalTo: view.rightAnchor)
         ])
     }
 
@@ -231,4 +242,11 @@ public class PopMenuDefaultAction: NSObject, PopMenuAction {
         }
     }
     
+}
+
+extension PopMenuDefaultAction {
+    public var menuTitleAlignment: NSTextAlignment {
+        get { titleLabel.textAlignment }
+        set { titleLabel.textAlignment = newValue }
+    }
 }
