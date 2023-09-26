@@ -260,7 +260,7 @@ extension PopMenuViewController {
     /// Setup the content view.
     fileprivate func configureContentView() {
         containerView.translatesAutoresizingMaskIntoConstraints = false
-        containerView.addShadow(offset: .init(width: 0, height: 1), opacity: 0.5, radius: 20)
+        containerView.menuAddShadow(offset: .init(width: 0, height: 1), opacity: 0.5, radius: 20)
         containerView.layer.cornerRadius = appearance.popMenuCornerRadius
         containerView.backgroundColor = .clear
         
@@ -339,15 +339,21 @@ extension PopMenuViewController {
         
         let size = CGSize(width: calculateContentWidth(), height: height)
         let origin = calculateContentOrigin(with: size)
-        
-        return CGRect(origin: origin, size: size)
+        var frame = CGRect(origin: origin, size: size)
+        let offset = frame.maxY - view.bounds.height
+        if offset > 0 {
+            frame.origin.y -= offset + 33.0
+        }
+        return frame
     }
     
     /// Determine where the menu should display.
     ///
     /// - Returns: The source origin point
     fileprivate func calculateContentOrigin(with size: CGSize) -> CGPoint {
-        guard let sourceFrame = absoluteSourceFrame else { return CGPoint(x: view.center.x - size.width / 2, y: view.center.y - size.height / 2) }
+        guard let sourceFrame = absoluteSourceFrame else {
+            return CGPoint(x: view.center.x - size.width / 2, y: view.center.y - size.height / 2)
+        }
         let minContentPos: CGFloat = UIScreen.main.bounds.size.width * 0.05
         let maxContentPos: CGFloat = UIScreen.main.bounds.size.width * 0.95
         

@@ -21,7 +21,7 @@ import UIKit
     var view: UIView { get }
     
     /// The initial color of the action.
-    var color: Color? { get }
+    var color: CrossPlatformColor? { get }
     
     var menuTitleAlignment: NSTextAlignment { get set }
     
@@ -76,7 +76,7 @@ public class PopMenuDefaultAction: NSObject, PopMenuAction {
     public let view: UIView
     
     /// Color of action.
-    public let color: Color?
+    public let color: CrossPlatformColor?
     
     /// Handler of action when selected.
     public let didSelect: PopMenuActionHandler?
@@ -87,7 +87,7 @@ public class PopMenuDefaultAction: NSObject, PopMenuAction {
     // MARK: - Computed Properties
     
     /// Text color of the label.
-    public var tintColor: Color {
+    public var tintColor: CrossPlatformColor {
         get {
             return titleLabel.textColor
         }
@@ -128,7 +128,7 @@ public class PopMenuDefaultAction: NSObject, PopMenuAction {
     }
     
     /// Background color for highlighted state.
-    private var backgroundColor: Color = .white
+    private var backgroundColor: CrossPlatformColor = .white
 
     // MARK: - Subviews
     
@@ -169,7 +169,7 @@ public class PopMenuDefaultAction: NSObject, PopMenuAction {
     // MARK: - Initializer
     
     /// Initializer.
-    public init(title: String? = nil, image: UIImage? = nil, color: Color? = nil, didSelect: PopMenuActionHandler? = nil) {
+    public init(title: String? = nil, image: UIImage? = nil, color: CrossPlatformColor? = nil, didSelect: PopMenuActionHandler? = nil) {
         self.title = title
         self.image = image
         self.color = color

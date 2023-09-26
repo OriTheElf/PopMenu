@@ -9,9 +9,9 @@
 import UIKit
 
 #if os(macOS)
-public typealias Color = NSColor
+public typealias CrossPlatformColor = NSColor
 #else
-public typealias Color = UIColor
+public typealias CrossPlatformColor = UIColor
 #endif
 
 /// Appearance for PopMenu.
@@ -68,7 +68,7 @@ public struct PopMenuBackgroundStyle {
     public let isDimmed: Bool?
     
     /// If dimmed, store the dim color.
-    public let dimColor: Color?
+    public let dimColor: CrossPlatformColor?
     
     /// If dimmed, store the dim opacity.
     public let dimOpacity: CGFloat?
@@ -84,7 +84,7 @@ public struct PopMenuBackgroundStyle {
     // MARK: - Initializers
     
     /// Quick setter for dimmed mode.
-    public static func dimmed(color: Color, opacity: CGFloat) -> PopMenuBackgroundStyle {
+    public static func dimmed(color: CrossPlatformColor, opacity: CGFloat) -> PopMenuBackgroundStyle {
         return PopMenuBackgroundStyle(isDimmed: true, dimColor: color, dimOpacity: opacity, isBlurred: nil, blurStyle: nil)
     }
     
@@ -125,15 +125,15 @@ public struct PopMenuColor {
 public struct PopMenuActionBackgroundColor {
     
     /// All colors (only one if solid color, or else it's gradient)
-    public let colors: [Color]
+    public let colors: [CrossPlatformColor]
     
     /// Fill an only solid color into the colors palette.
-    public static func solid(fill color: Color) -> PopMenuActionBackgroundColor {
+    public static func solid(fill color: CrossPlatformColor) -> PopMenuActionBackgroundColor {
         return .init(colors: [color])
     }
     
     /// Fill gradient colors into the colors palette.
-    public static func gradient(fill colors: Color...) -> PopMenuActionBackgroundColor {
+    public static func gradient(fill colors: CrossPlatformColor...) -> PopMenuActionBackgroundColor {
         return .init(colors: colors)
     }
     
@@ -143,10 +143,10 @@ public struct PopMenuActionBackgroundColor {
 public struct PopMenuActionColor {
     
     /// Tint color.
-    public let color: Color
+    public let color: CrossPlatformColor
     
     /// Get action's color instance with given color.
-    public static func tint(_ color: Color) -> PopMenuActionColor {
+    public static func tint(_ color: CrossPlatformColor) -> PopMenuActionColor {
         return PopMenuActionColor(color: color)
     }
     
@@ -159,10 +159,10 @@ public struct PopMenuActionSeparator: Equatable {
     public let height: CGFloat
     
     /// Color of separator.
-    public let color: Color
+    public let color: CrossPlatformColor
     
     /// Fill separator color with given color and height.
-    public static func fill(_ color: Color = Color.white.withAlphaComponent(0.5), height: CGFloat = 0.5) -> PopMenuActionSeparator {
+    public static func fill(_ color: CrossPlatformColor = CrossPlatformColor.white.withAlphaComponent(0.5), height: CGFloat = 0.5) -> PopMenuActionSeparator {
         return PopMenuActionSeparator(height: height, color: color)
     }
     
