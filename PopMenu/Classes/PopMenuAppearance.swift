@@ -21,6 +21,9 @@ public struct PopMenuAppearance {
     /// Background and tint colors.
     public var popMenuColor: PopMenuColor = .default()
     
+    /// 高亮时的颜色
+    public var popMenuHighlightedColor = PopMenuColor.default()
+    
     /// Background style.
     public var popMenuBackgroundStyle: PopMenuBackgroundStyle = .dimmed(color: .black, opacity: 0.4)
     
@@ -53,6 +56,12 @@ public struct PopMenuAppearance {
     
     /// Menu alignment
     public var menuTitleAlignment = NSTextAlignment.left
+    
+    /// 选中时是否放大
+    public var enlargeWhenHighlighted = true
+    
+    /// 高亮时的背景色
+    public var highlightedBackgroundColor: CrossPlatformColor?
 
     public init() {
         

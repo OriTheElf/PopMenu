@@ -40,6 +40,9 @@ import UIKit
     /// The color to set for both label and icon.
     var tintColor: UIColor { get set }
     
+    /// 高亮时候的颜色
+    var highlightedTintColor: UIColor? { get set }
+    
     /// The font for label.
     var font: UIFont { get set }
     
@@ -48,6 +51,12 @@ import UIKit
     
     /// Is the view highlighted by gesture.
     var highlighted: Bool { get set }
+    
+    /// 高亮时是否放大
+    var enlargeWhenHighlighted: Bool { get set }
+    
+    /// 高亮时的背景色
+    var highlightedBackgroundColor: CrossPlatformColor? { get set }
     
     /// Render the view for action.
     func renderActionView()
@@ -97,6 +106,15 @@ public class PopMenuDefaultAction: NSObject, PopMenuAction {
             backgroundColor = newValue.blackOrWhiteContrastingColor()
         }
     }
+    
+    /// 高亮时候的文字颜色
+    public var highlightedTintColor: CrossPlatformColor?
+    
+    /// 高亮时是否放大
+    public var enlargeWhenHighlighted = true
+    
+    /// 高亮时的背景色
+    public var highlightedBackgroundColor: CrossPlatformColor?
     
     /// Font for the label.
     public var font: UIFont {
@@ -212,12 +230,27 @@ public class PopMenuDefaultAction: NSObject, PopMenuAction {
     
     /// Highlight the view when panned on top,
     /// unhighlight the view when pan gesture left.
-    public func highlightActionView(_ highlight: Bool) {
+    public func highlightActionView(_ isHighlighted: Bool) {
+        
+        let updateHighlighted: () -> Void = {
+            [weak self] in
+            guard let self else { return }
+            titleLabel.textColor = isHighlighted ? highlightedTintColor ?? tintColor : tintColor
+            view.backgroundColor = isHighlighted ? highlightedBackgroundColor ?? backgroundColor.withAlphaComponent(0.25) : .clear
+            if enlargeWhenHighlighted {
+                view.transform = isHighlighted ? CGAffineTransform.identity.scaledBy(x: 1.09, y: 1.09) : .identity
+            }
+        }
+        
         DispatchQueue.main.async {
-            UIView.animate(withDuration: 0.26, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 9, options: self.highlighted ? UIView.AnimationOptions.curveEaseIn : UIView.AnimationOptions.curveEaseOut, animations: {
-                self.view.transform = self.highlighted ? CGAffineTransform.identity.scaledBy(x: 1.09, y: 1.09) : .identity
-                self.view.backgroundColor = self.highlighted ? self.backgroundColor.withAlphaComponent(0.25) : .clear
-            }, completion: nil)
+            UIView.animate(
+                withDuration: 0.26,
+                delay: 0,
+                usingSpringWithDamping: 0.6,
+                initialSpringVelocity: 9,
+                options: isHighlighted ? .curveEaseIn : .curveEaseOut,
+                animations: updateHighlighted,
+                completion: nil)
         }
     }
     

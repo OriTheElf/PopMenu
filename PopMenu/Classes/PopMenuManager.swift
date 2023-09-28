@@ -35,6 +35,9 @@ final public class PopMenuManager: NSObject {
     /// Determines whether to use haptics for menu selection.
     public var popMenuShouldEnableHaptics: Bool = true
     
+    /// 决定是否开启拖动手势
+    public var shouldEnablePanGesture = true
+    
     /// Appearance for passing on to pop menu.
     public var popMenuAppearance: PopMenuAppearance
     
@@ -52,6 +55,7 @@ final public class PopMenuManager: NSObject {
         popMenu.shouldDismissOnSelection = popMenuShouldDismissOnSelection
         popMenu.didDismiss = popMenuDidDismiss
         popMenu.shouldEnableHaptics = popMenuShouldEnableHaptics
+        popMenu.shouldEnablePanGesture = shouldEnablePanGesture
     }
     
     /// Initializer with appearance.

@@ -21,6 +21,7 @@ final class PopMenuExamples {
         ]
 
         let popMenu = PopMenuViewController(actions: actions)
+        popMenu.appearance.popMenuHighlightedColor.actionColor = .tint(.blue)
         
         // TODO: Not ready yet
         // popMenu.appearance.popMenuPresentationStyle = .near(.bottom)

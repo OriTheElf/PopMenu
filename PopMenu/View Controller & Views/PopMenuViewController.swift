@@ -454,8 +454,11 @@ extension PopMenuViewController {
         actions.forEach { action in
             action.font = appearance.popMenuFont
             action.tintColor = action.color ?? appearance.popMenuColor.actionColor.color
+            action.highlightedTintColor = appearance.popMenuHighlightedColor.actionColor.color
             action.cornerRadius = appearance.popMenuCornerRadius / 2
             action.menuTitleAlignment = appearance.menuTitleAlignment
+            action.enlargeWhenHighlighted = appearance.enlargeWhenHighlighted
+            action.highlightedBackgroundColor = appearance.highlightedBackgroundColor
             action.renderActionView()
             
             // Give separator to each action but the last
@@ -463,10 +466,10 @@ extension PopMenuViewController {
                 addSeparator(to: action.view)
             }
             
-            let tapper = UITapGestureRecognizer(target: self, action: #selector(menuDidTap(_:)))
-            tapper.delaysTouchesEnded = false
+            let tapMenu = TouchDownRecognizedTapGesture(target: self, action: #selector(menuDidTap(_:)))
+            tapMenu.delaysTouchesEnded = false
             
-            action.view.addGestureRecognizer(tapper)
+            action.view.addGestureRecognizer(tapMenu)
             
             actionStackView.addArrangedSubview(action.view)
         }
@@ -554,10 +557,19 @@ extension PopMenuViewController {
     }
     
     /// When the menu action gets tapped.
-    @objc fileprivate func menuDidTap(_ gesture: UITapGestureRecognizer) {
-        guard let attachedView = gesture.view, let index = actions.index(where: { $0.view.isEqual(attachedView) }) else { return }
-
-        actionDidSelect(at: index)
+    @objc fileprivate func menuDidTap(_ gesture: TouchDownRecognizedTapGesture) {
+        guard let attachedView = gesture.view else { return }
+        guard let index = actions.index(where: { $0.view.isEqual(attachedView) }) else { return }
+        switch gesture.state {
+        case .began:
+            let action = actions[index]
+            guard !action.highlighted else { return }
+            action.highlighted = true
+        case .ended:
+            actionDidSelect(at: index)
+        default:
+            break
+        }
     }
     
     /// When the pan gesture triggered in actions view.
