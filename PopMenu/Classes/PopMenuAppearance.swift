@@ -22,7 +22,7 @@ public struct PopMenuAppearance {
     public var popMenuColor: PopMenuColor = .default()
     
     /// 高亮时的颜色
-    public var popMenuHighlightedColor = PopMenuColor.default()
+    public var popMenuHighlightedTextColor = PopMenuColor.default()
     
     /// Background style.
     public var popMenuBackgroundStyle: PopMenuBackgroundStyle = .dimmed(color: .black, opacity: 0.4)
@@ -125,7 +125,11 @@ public struct PopMenuColor {
     
     /// Get default background and action color.
     public static func `default`() -> PopMenuColor {
-        return PopMenuColor(backgroundColor: .gradient(fill: #colorLiteral(red: 0.168627451, green: 0.168627451, blue: 0.168627451, alpha: 1), #colorLiteral(red: 0.2156862745, green: 0.2156862745, blue: 0.2156862745, alpha: 1)), actionColor: .tint(.white))
+        let from = #colorLiteral(red: 0.168627451, green: 0.168627451, blue: 0.168627451, alpha: 1)
+        let to = #colorLiteral(red: 0.2156862745, green: 0.2156862745, blue: 0.2156862745, alpha: 1)
+        let gradient = PopMenuActionBackgroundColor.gradient(fill: from, to)
+        let actionColor = PopMenuActionColor.tint(.white)
+        return PopMenuColor(backgroundColor: gradient, actionColor: actionColor)
     }
     
 }

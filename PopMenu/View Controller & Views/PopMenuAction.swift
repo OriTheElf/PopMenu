@@ -41,7 +41,7 @@ import UIKit
     var tintColor: UIColor { get set }
     
     /// 高亮时候的颜色
-    var highlightedTintColor: UIColor? { get set }
+    var highlightedTextColor: UIColor? { get set }
     
     /// The font for label.
     var font: UIFont { get set }
@@ -108,7 +108,7 @@ public class PopMenuDefaultAction: NSObject, PopMenuAction {
     }
     
     /// 高亮时候的文字颜色
-    public var highlightedTintColor: CrossPlatformColor?
+    public var highlightedTextColor: CrossPlatformColor?
     
     /// 高亮时是否放大
     public var enlargeWhenHighlighted = true
@@ -235,7 +235,8 @@ public class PopMenuDefaultAction: NSObject, PopMenuAction {
         let updateHighlighted: () -> Void = {
             [weak self] in
             guard let self else { return }
-            titleLabel.textColor = isHighlighted ? highlightedTintColor ?? tintColor : tintColor
+            print("\(titleLabel.text ?? "")高亮? \(isHighlighted)")
+            titleLabel.textColor = isHighlighted ? highlightedTextColor ?? tintColor : tintColor
             view.backgroundColor = isHighlighted ? highlightedBackgroundColor ?? backgroundColor.withAlphaComponent(0.25) : .clear
             if enlargeWhenHighlighted {
                 view.transform = isHighlighted ? CGAffineTransform.identity.scaledBy(x: 1.09, y: 1.09) : .identity

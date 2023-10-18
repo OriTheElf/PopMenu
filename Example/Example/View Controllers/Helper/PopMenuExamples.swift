@@ -17,11 +17,27 @@ final class PopMenuExamples {
         let actions = [
             PopMenuDefaultAction(title: "Some Text"),
             PopMenuDefaultAction(title: "Short"),
+            PopMenuDefaultAction(title: "A Longer Text"),
+            PopMenuDefaultAction(title: "A Longer Text"),
+            PopMenuDefaultAction(title: "A Longer Text"),
+            PopMenuDefaultAction(title: "A Longer Text"),
+            PopMenuDefaultAction(title: "A Longer Text"),
+            PopMenuDefaultAction(title: "A Longer Text"),
+            PopMenuDefaultAction(title: "A Longer Text"),
+            PopMenuDefaultAction(title: "A Longer Text"),
+            PopMenuDefaultAction(title: "A Longer Text"),
+            PopMenuDefaultAction(title: "A Longer Text"),
+            PopMenuDefaultAction(title: "A Longer Text"),
+            PopMenuDefaultAction(title: "A Longer Text"),
+            PopMenuDefaultAction(title: "A Longer Text"),
+            PopMenuDefaultAction(title: "A Longer Text"),
+            PopMenuDefaultAction(title: "A Longer Text"),
+            PopMenuDefaultAction(title: "A Longer Text"),
+            PopMenuDefaultAction(title: "A Longer Text"),
             PopMenuDefaultAction(title: "A Longer Text")
         ]
 
         let popMenu = PopMenuViewController(actions: actions)
-        popMenu.appearance.popMenuHighlightedColor.actionColor = .tint(.blue)
         
         // TODO: Not ready yet
         // popMenu.appearance.popMenuPresentationStyle = .near(.bottom)

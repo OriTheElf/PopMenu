@@ -454,7 +454,7 @@ extension PopMenuViewController {
         actions.forEach { action in
             action.font = appearance.popMenuFont
             action.tintColor = action.color ?? appearance.popMenuColor.actionColor.color
-            action.highlightedTintColor = appearance.popMenuHighlightedColor.actionColor.color
+            action.highlightedTextColor = appearance.popMenuHighlightedTextColor.actionColor.color
             action.cornerRadius = appearance.popMenuCornerRadius / 2
             action.menuTitleAlignment = appearance.menuTitleAlignment
             action.enlargeWhenHighlighted = appearance.enlargeWhenHighlighted
@@ -466,10 +466,10 @@ extension PopMenuViewController {
                 addSeparator(to: action.view)
             }
             
-            let tapMenu = TouchDownRecognizedTapGesture(target: self, action: #selector(menuDidTap(_:)))
-            tapMenu.delaysTouchesEnded = false
+            let tap = UITapGestureRecognizer(target: self, action: #selector(menuDidTap))
+            tap.delaysTouchesEnded = false
             
-            action.view.addGestureRecognizer(tapMenu)
+            action.view.addGestureRecognizer(tap)
             
             actionStackView.addArrangedSubview(action.view)
         }
@@ -557,19 +557,10 @@ extension PopMenuViewController {
     }
     
     /// When the menu action gets tapped.
-    @objc fileprivate func menuDidTap(_ gesture: TouchDownRecognizedTapGesture) {
+    @objc fileprivate func menuDidTap(_ gesture: UITapGestureRecognizer) {
         guard let attachedView = gesture.view else { return }
         guard let index = actions.index(where: { $0.view.isEqual(attachedView) }) else { return }
-        switch gesture.state {
-        case .began:
-            let action = actions[index]
-            guard !action.highlighted else { return }
-            action.highlighted = true
-        case .ended:
-            actionDidSelect(at: index)
-        default:
-            break
-        }
+        actionDidSelect(at: index)
     }
     
     /// When the pan gesture triggered in actions view.

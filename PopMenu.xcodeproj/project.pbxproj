@@ -22,7 +22,6 @@
 		9D91B30A208207B30029ACAD /* UIView+Shadows.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D91B309208207B30029ACAD /* UIView+Shadows.swift */; };
 		9DE36D2F20829D5F00C49BED /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE36D2E20829D5F00C49BED /* Haptics.swift */; };
 		9DE36D312082A09200C49BED /* UIColor+Contrast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE36D302082A09200C49BED /* UIColor+Contrast.swift */; };
-		DE756E892AC54987004388E2 /* TouchDownRecognizedTapGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE756E882AC54987004388E2 /* TouchDownRecognizedTapGesture.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,7 +53,6 @@
 		9D91B309208207B30029ACAD /* UIView+Shadows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Shadows.swift"; sourceTree = "<group>"; };
 		9DE36D2E20829D5F00C49BED /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
 		9DE36D302082A09200C49BED /* UIColor+Contrast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Contrast.swift"; sourceTree = "<group>"; };
-		DE756E882AC54987004388E2 /* TouchDownRecognizedTapGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchDownRecognizedTapGesture.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,7 +130,6 @@
 				9D397AF62080A06200C58037 /* Helpers */,
 				9D397AD420805F4D00C58037 /* PopMenuManager.swift */,
 				9D397AFC2080A5F000C58037 /* PopMenuAppearance.swift */,
-				DE756E882AC54987004388E2 /* TouchDownRecognizedTapGesture.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -279,7 +276,6 @@
 				9D397AFF2080AB9200C58037 /* PopMenuGradientView.swift in Sources */,
 				9D397AF32080885F00C58037 /* PopMenuPresentAnimationController.swift in Sources */,
 				9D397AFD2080A5F000C58037 /* PopMenuAppearance.swift in Sources */,
-				DE756E892AC54987004388E2 /* TouchDownRecognizedTapGesture.swift in Sources */,
 				9D397AF52080887600C58037 /* PopMenuDismissAnimationController.swift in Sources */,
 				9D397AD720805F9900C58037 /* PopMenuViewController.swift in Sources */,
 			);
