@@ -235,7 +235,6 @@ public class PopMenuDefaultAction: NSObject, PopMenuAction {
         let updateHighlighted: () -> Void = {
             [weak self] in
             guard let self else { return }
-            print("\(titleLabel.text ?? "")高亮? \(isHighlighted)")
             titleLabel.textColor = isHighlighted ? highlightedTextColor ?? tintColor : tintColor
             view.backgroundColor = isHighlighted ? highlightedBackgroundColor ?? backgroundColor.withAlphaComponent(0.25) : .clear
             if enlargeWhenHighlighted {
